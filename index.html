@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Ganesh Krithikavasan — AI-Native Product Builder</title>
-<meta name="description" content="Ganesh Krithikavasan — Principal PM building the context fabric layer for enterprise AI products. Enterprise SaaS, legal tech, knowledge management.">
+<meta name="description" content="Ganesh Krithikavasan — Principal Product Manager. Opens markets, ships platform transitions, and builds AI products in enterprise SaaS, legal tech, and knowledge management.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -24,9 +24,7 @@
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
-
-  html { scroll-behavior: smooth; }
-
+  html { scroll-behavior: smooth; scroll-padding-top: 64px; }
   body {
     background: var(--bg);
     color: var(--text);
@@ -34,303 +32,229 @@
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
   }
-
   a { color: var(--teal); text-decoration: none; }
   a:hover { text-decoration: underline; }
   a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 
-  .wrap {
-    max-width: 720px;
-    margin: 0 auto;
-    padding: 0 24px;
-  }
+  .wrap { max-width: 720px; margin: 0 auto; padding: 0 24px; }
 
-  /* ---------- HERO ---------- */
-  .hero {
-    min-height: 92vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 80px 0 60px;
+  /* ---------- STICKY NAV ---------- */
+  .topnav {
+    position: sticky; top: 0; z-index: 10;
+    background: rgba(11,14,20,0.92);
+    backdrop-filter: blur(8px);
     border-bottom: 1px solid var(--rule);
   }
+  .topnav .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 48px; }
+  .topnav .brand { font-family: var(--mono); font-size: 13px; color: var(--text); font-weight: 500; white-space: nowrap; }
+  .topnav .brand:hover { text-decoration: none; color: var(--accent); }
+  .topnav ul { list-style: none; display: flex; gap: 18px; font-family: var(--mono); font-size: 13px; overflow-x: auto; }
+  .topnav ul a { color: var(--text-dim); white-space: nowrap; }
+  .topnav ul a:hover { color: var(--teal); text-decoration: none; }
+  @media (max-width: 560px) { .topnav .brand { display: none; } }
 
-  .terminal {
-    font-family: var(--mono);
-    font-size: 15px;
-    color: var(--text-dim);
-    margin-bottom: 40px;
-    min-height: 168px;
-  }
+  /* ---------- HERO ---------- */
+  .hero { padding: 72px 0 48px; }
+  .name-row { display: flex; align-items: center; gap: 18px; margin-bottom: 14px; }
+  .avatar { width: 56px; height: 56px; border-radius: 50%; object-fit: cover; border: 2px solid var(--rule); flex-shrink: 0; }
+  .name { font-weight: 700; font-size: clamp(34px, 6vw, 52px); letter-spacing: -0.02em; line-height: 1.1; }
+  .role { font-family: var(--mono); font-size: 16px; color: var(--accent); margin-bottom: 22px; }
+  .thesis { font-size: 18px; color: var(--text-dim); max-width: 60ch; margin-bottom: 16px; }
+  .thesis strong { color: var(--text); font-weight: 600; }
 
-  .terminal .line { white-space: pre-wrap; }
-  .terminal .prompt { color: var(--accent-dim); }
-  .terminal .out { color: var(--teal); }
-  .cursor {
-    display: inline-block;
-    width: 8px;
-    height: 1em;
-    background: var(--accent);
-    vertical-align: text-bottom;
-    animation: blink 1s step-end infinite;
-  }
-  @keyframes blink { 50% { opacity: 0; } }
-
-  .name-row {
-    display: flex;
-    align-items: center;
-    gap: 18px;
-    margin-bottom: 14px;
-  }
-
-  .avatar {
-    width: 56px;
-    height: 56px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid var(--rule);
-    flex-shrink: 0;
-  }
-
-  .name {
-    font-family: var(--sans);
-    font-weight: 700;
-    font-size: clamp(34px, 6vw, 52px);
-    letter-spacing: -0.02em;
-    line-height: 1.1;
-    margin-bottom: 0;
-  }
-
-  .role {
-    font-family: var(--mono);
-    font-size: 16px;
-    color: var(--accent);
-    margin-bottom: 22px;
-  }
-
-  .thesis {
-    font-size: 19px;
-    color: var(--text-dim);
-    max-width: 58ch;
-    margin-bottom: 30px;
-  }
-
-  .hero-links {
-    display: flex;
-    gap: 20px;
-    font-family: var(--mono);
-    font-size: 14px;
-    flex-wrap: wrap;
-  }
+  .hero-links { display: flex; gap: 20px; font-family: var(--mono); font-size: 14px; flex-wrap: wrap; margin-top: 24px; }
   .hero-links a { color: var(--text); border-bottom: 1px solid var(--rule); padding-bottom: 2px; }
   .hero-links a:hover { color: var(--teal); border-color: var(--teal); text-decoration: none; }
 
+  .glance {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px;
+    background: var(--rule); border: 1px solid var(--rule); border-radius: 4px; overflow: hidden; margin-top: 36px;
+  }
+  .glance div { background: var(--bg-raised); padding: 18px 20px; }
+  .glance .num { font-family: var(--mono); font-size: 24px; font-weight: 600; color: var(--accent); line-height: 1.2; }
+  .glance .lbl { font-size: 13px; color: var(--text-dim); margin-top: 4px; line-height: 1.45; }
+  @media (max-width: 520px) { .glance { grid-template-columns: 1fr; } }
+
   /* ---------- SECTIONS ---------- */
-  section { padding: 64px 0; border-bottom: 1px solid var(--rule); }
-  section:last-of-type { border-bottom: none; }
-
-  .eyebrow {
-    font-family: var(--mono);
-    font-size: 12px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--text-faint);
-    margin-bottom: 14px;
-  }
-
-  h2 {
-    font-size: 24px;
-    font-weight: 600;
-    margin-bottom: 20px;
-    letter-spacing: -0.01em;
-  }
-
+  section { padding: 56px 0; border-top: 1px solid var(--rule); }
+  .eyebrow { font-family: var(--mono); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 14px; }
+  h2 { font-size: 24px; font-weight: 600; margin-bottom: 8px; letter-spacing: -0.01em; }
   p { color: var(--text-dim); margin-bottom: 16px; max-width: 62ch; }
   p:last-child { margin-bottom: 0; }
   p strong { color: var(--text); font-weight: 600; }
 
-  .highlights {
-    list-style: none;
-    margin-top: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 18px;
-  }
-  .highlights li {
-    display: grid;
-    grid-template-columns: 92px 1fr;
-    gap: 18px;
-    align-items: start;
-  }
-  .highlights .metric {
-    font-family: var(--mono);
-    color: var(--accent);
-    font-size: 14px;
-    font-weight: 500;
-    padding-top: 2px;
-  }
-  .highlights .desc { color: var(--text-dim); font-size: 15px; }
-  .highlights .desc strong { color: var(--text); }
+  /* ---------- CORE STRENGTHS ---------- */
+  .strengths { list-style: none; margin-top: 22px; display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .strengths li { background: var(--bg-raised); border: 1px solid var(--rule); border-radius: 4px; padding: 16px 18px; }
+  .strengths strong { display: block; color: var(--text); font-size: 15px; margin-bottom: 4px; }
+  .strengths span { color: var(--text-dim); font-size: 14px; line-height: 1.5; display: block; }
+  @media (max-width: 560px) { .strengths { grid-template-columns: 1fr; } }
 
-  @media (max-width: 520px) {
-    .highlights li { grid-template-columns: 1fr; gap: 4px; }
-  }
+  /* ---------- EXPERIENCE (RESUME) ---------- */
+  .job { margin-top: 28px; }
+  .job-head { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 4px 16px; }
+  .job-role { font-size: 18px; font-weight: 600; color: var(--text); }
+  .job-meta { font-family: var(--mono); font-size: 12px; color: var(--text-faint); }
+  .job-co { color: var(--accent); font-family: var(--mono); font-size: 14px; margin: 2px 0 10px; }
+  .job-scope { font-size: 15px; }
+  .job-progression { font-family: var(--mono); font-size: 12px; color: var(--text-faint); margin-bottom: 8px; }
 
-  .now-list { list-style: none; margin-top: 18px; display: flex; flex-direction: column; gap: 14px; }
-  .now-list li { display: flex; gap: 12px; align-items: baseline; font-size: 15px; color: var(--text-dim); }
-  .now-list .tag {
-    font-family: var(--mono);
-    font-size: 11px;
-    color: var(--bg);
-    background: var(--teal);
-    padding: 2px 7px;
-    border-radius: 3px;
-    flex-shrink: 0;
-    font-weight: 600;
+  .theme { margin-top: 26px; }
+  .theme h3 {
+    font-family: var(--mono); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--teal); margin-bottom: 10px; font-weight: 500;
   }
-  .now-list .tag.wip { background: var(--accent); }
+  .bullets { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+  .bullets li { position: relative; padding-left: 20px; font-size: 15px; color: var(--text-dim); line-height: 1.6; }
+  .bullets li::before { content: "›"; position: absolute; left: 4px; color: var(--accent); font-family: var(--mono); }
+  .bullets li strong { color: var(--text); font-weight: 600; }
 
-  .timeline { display: flex; flex-direction: column; gap: 28px; margin-top: 20px; }
+  .earlier { margin-top: 40px; display: flex; flex-direction: column; gap: 24px; }
   .tl-item { border-left: 2px solid var(--rule); padding-left: 20px; }
   .tl-role { font-weight: 600; font-size: 16px; color: var(--text); }
-  .tl-meta { font-family: var(--mono); font-size: 12px; color: var(--text-faint); margin: 4px 0 8px; }
-  .tl-progression { font-size: 13px; color: var(--text-faint); font-family: var(--mono); }
+  .tl-meta { font-family: var(--mono); font-size: 12px; color: var(--text-faint); margin-top: 4px; }
+
+  /* ---------- LISTS ---------- */
+  .now-list { list-style: none; margin-top: 18px; display: flex; flex-direction: column; gap: 14px; }
+  .now-list li { display: flex; gap: 12px; align-items: baseline; font-size: 15px; color: var(--text-dim); }
+  .now-list .tag { font-family: var(--mono); font-size: 11px; color: var(--bg); background: var(--teal); padding: 2px 7px; border-radius: 3px; flex-shrink: 0; font-weight: 600; }
+  .now-list .tag.wip { background: var(--accent); }
 
   .edu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 24px; }
   @media (max-width: 520px) { .edu-grid { grid-template-columns: 1fr; } }
   .edu-item h3 { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
   .edu-item p { font-size: 14px; color: var(--text-faint); margin: 0; }
-
   .certs-inline { margin-top: 24px; font-size: 14px; color: var(--text-dim); }
   .certs-inline span { color: var(--text); }
 
   .resume-link {
-    display: inline-block;
-    margin-top: 24px;
-    font-family: var(--mono);
-    font-size: 13px;
-    color: var(--accent);
-    border: 1px solid var(--accent-dim);
-    padding: 8px 16px;
-    border-radius: 3px;
+    display: inline-block; margin-top: 24px; font-family: var(--mono); font-size: 13px;
+    color: var(--accent); border: 1px solid var(--accent-dim); padding: 8px 16px; border-radius: 3px;
   }
   .resume-link:hover { background: rgba(232,170,76,0.1); text-decoration: none; }
 
   footer {
-    padding: 48px 0 64px;
-    font-family: var(--mono);
-    font-size: 13px;
-    color: var(--text-faint);
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 12px;
+    padding: 40px 0 64px; border-top: 1px solid var(--rule);
+    font-family: var(--mono); font-size: 13px; color: var(--text-faint);
+    display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px;
   }
   footer a { color: var(--text-faint); }
   footer a:hover { color: var(--teal); }
-
-  @media (prefers-reduced-motion: reduce) {
-    .cursor { animation: none; }
-  }
 </style>
 </head>
 <body>
 
-<div class="wrap">
-  <section class="hero">
-    <div class="terminal" id="terminal" aria-hidden="true"></div>
+<nav class="topnav" aria-label="Sections">
+  <div class="wrap">
+    <a class="brand" href="#top">ganesh.k</a>
+    <ul>
+      <li><a href="#strengths">Strengths</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#public">Public work</a></li>
+      <li><a href="#education">Education</a></li>
+    </ul>
+  </div>
+</nav>
 
+<div class="wrap" id="top">
+
+  <header class="hero">
     <div class="name-row">
       <!-- Swap src below for your real headshot (square, min 112x112px) -->
       <img class="avatar" src="https://placehold.co/112x112/11151F/8B93A3?text=GK" alt="Ganesh Krithikavasan">
       <h1 class="name">Ganesh Krithikavasan</h1>
     </div>
     <div class="role">Principal Product Manager — iManage</div>
+
     <p class="thesis">
-      I build the context fabric layer for enterprise products — the layer that lets AI
-      actually understand a professional's work, not just assist with it. 15+ years in
-      enterprise SaaS, legal tech, and knowledge management.
+      I <strong>open new markets, ship platform changes, and protect revenue</strong>. Then I build
+      the AI prototypes that prove the case before engineering commits. 15+ years in enterprise
+      SaaS, legal tech, and knowledge management.
     </p>
+    <p class="thesis">
+      My focus is the context fabric layer: the part that lets AI understand a professional's work, not just assist with it.
+    </p>
+
     <div class="hero-links">
       <a href="https://www.linkedin.com/in/ganeshkrithikavasan/" target="_blank" rel="noopener">LinkedIn</a>
       <a href="https://github.com/" target="_blank" rel="noopener">GitHub</a>
-      <a href="#work">Work</a>
-      <a href="#projects">Projects</a>
-      <a href="#experience">Background</a>
-      <a href="#now">Now</a>
-      <a href="mailto:you@example.com">Email</a>
+      <a href="mailto:ganesh.krithikavasan@gmail.com">Email</a>
+      <a href="resume.pdf" download>Resume (PDF)</a>
     </div>
-  </section>
 
-  <section id="about">
-    <div class="eyebrow">// about</div>
-    <h2>What I'm building</h2>
-    <p>
-      I own the client experience strategy for iManage's document and email products —
-      Windows, Outlook, Mac, iOS, and Android — plus the microservices underneath and the
-      AI direction we're taking them. The goal is simple: give knowledge workers better,
-      faster outcomes, without adding noise to their day.
-    </p>
-    <p>
-      I run continuous discovery and map opportunity trees to find what's actually worth
-      solving, then prototype the agents and workflows myself using Claude Code and MCPs —
-      real field validation before engineering commits a sprint.
-    </p>
-  </section>
+    <div class="glance" aria-label="Impact at a glance">
+      <div><div class="num">246 customers</div><div class="lbl">adopted our new email product in its first eight months, with 2,097 active users. Our base is 4,000+ customers.</div></div>
+      <div><div class="num">~$6M ARR</div><div class="lbl">cloud deal shaped by onsite discovery and a prototype I built</div></div>
+      <div><div class="num">$3.4B</div><div class="lbl">new market sized, with a ~$20M ARR five-year case</div></div>
+      <div><div class="num">$4M ARR</div><div class="lbl">kept through a product end-of-life, with ~$600K in yearly cost removed</div></div>
+    </div>
+  </header>
 
-  <section id="work">
-    <div class="eyebrow">// selected work</div>
-    <h2>Career impact</h2>
-    <ul class="highlights">
-      <li>
-        <span class="metric">$60M TAM</span>
-        <span class="desc">Shipped Cloud Email Management and New Outlook to EAP readiness, unlocking a <strong>$60M ARR TAM</strong>, with early traction across 111 customers and 8 partners.</span>
-      </li>
-      <li>
-        <span class="metric">100% YoY</span>
-        <span class="desc">Took iManage Drive from concept to mass adoption — <strong>100% YoY growth</strong>, then 55% YoY over the following two years — by embedding governed DMS access into Windows Explorer and macOS Finder.</span>
-      </li>
-      <li>
-        <span class="metric">0→1</span>
-        <span class="desc">Led the transformation of Email Management from a legacy COM add-in into an <strong>AI-powered mailbox experience</strong> — intelligent filing, bulk actions, guided organization.</span>
-      </li>
-      <li>
-        <span class="metric">$4M ARR</span>
-        <span class="desc">Led the end-of-life of the Gmail Extension, retaining <strong>$4M ARR</strong> and eliminating ~$600K in annual costs, reallocated to higher-growth initiatives.</span>
-      </li>
-    </ul>
-  </section>
-
-  <section id="projects">
-    <div class="eyebrow">// projects & writing</div>
-    <h2>What I'm shipping publicly</h2>
-    <ul class="now-list">
-      <li><span class="tag">WRITE</span> <a href="writing/pm-ppm-fieldkit.html">I turned 49 PM tasks into a Claude plugin</a> — building a Claude Code plugin covering the full PM/PPM lifecycle.</li>
-      <li><span class="tag wip">WIP</span> <a href="writing/email-insights-harness.html">Email Commitment Finder</a> — an AI harness that finds commitments and deadlines in email, and says when it isn't sure. Sonnet vs. a local DeepSeek-R1 cost and quality comparison. <a href="https://github.com/ganeshkrithikavasan/Email-Commitment-Finder" target="_blank" rel="noopener">Repo</a></li>
-    </ul>
-  </section>
-
-  <section id="now">
-    <div class="eyebrow">// currently</div>
-    <h2>Now</h2>
-    <ul class="now-list">
-      <li><span class="tag wip">WIP</span> Working toward Claude Certified Architect — not for the credential, for the depth it forces.</li>
-      <li><span class="tag">BUILD</span> Shipped the <a href="writing/pm-ppm-fieldkit.html">PM/PPM Field Kit</a>, 49 Claude Code skills covering the full product management lifecycle.</li>
-      <li><span class="tag wip">WIP</span> Building the <a href="writing/email-insights-harness.html">Email Commitment Finder</a>: extract, check, decide, record, with a human in the loop, then exposed as MCP tools.</li>
-      <li><span class="tag">WRITE</span> A running thesis on "context fabric" as a product concept for enterprise AI — first piece coming soon.</li>
-      <li><span class="tag">SPEAK</span> Open to conversations and talks on AI product strategy, agentic workflows, and enterprise knowledge management.</li>
+  <section id="strengths">
+    <div class="eyebrow">// core strengths</div>
+    <h2>What I bring</h2>
+    <ul class="strengths">
+      <li><strong>Market creation</strong><span>I turn one customer's pain into a new segment with a sized case.</span></li>
+      <li><strong>Commercial thinking</strong><span>TAM sizing, pricing, and the cost of running AI services.</span></li>
+      <li><strong>Platform transitions</strong><span>I move customers off legacy products and keep them.</span></li>
+      <li><strong>AI product building</strong><span>Prototypes, MCP workflows, and Claude Code skills.</span></li>
+      <li><strong>Continuous discovery</strong><span>Onsite visits and interviews, turned into themes and personas.</span></li>
+      <li><strong>Executive influence</strong><span>I win support with data and working prototypes.</span></li>
     </ul>
   </section>
 
   <section id="experience">
-    <div class="eyebrow">// experience & education</div>
-    <h2>Background</h2>
-    <div class="timeline">
-      <div class="tl-item">
-        <div class="tl-role">iManage — Principal Product Manager</div>
-        <div class="tl-meta">Aug 2017 – Present · Chicago, IL</div>
-        <div class="tl-progression">Product Manager → Senior Product Manager → Principal Product Manager</div>
+    <div class="eyebrow">// experience</div>
+    <h2>Experience</h2>
+
+    <div class="job">
+      <div class="job-head">
+        <div class="job-role">Principal Product Manager</div>
+        <div class="job-meta">Aug 2017 – Present · Chicago, IL</div>
       </div>
+      <div class="job-co">iManage</div>
+      <div class="job-progression">Product Manager → Senior Product Manager → Principal Product Manager</div>
+      <p class="job-scope">
+        I own the client strategy for iManage's document and email products. That covers Windows, Outlook, Mac, iOS, and Android, the services underneath, and our AI direction.
+        The goal: better, faster outcomes for knowledge workers, with no extra noise.
+      </p>
+
+      <div class="theme">
+        <h3>Market creation and growth</h3>
+        <ul class="bullets">
+          <li><strong>Opened investment banking as a new market.</strong> A large bank's workspaces held 12,000+ items, and Drive stopped scaling. I ran onsite discovery and found five themes and five personas. I presented them to the executive committee. The work shaped a <strong>~$6M ARR cloud deal</strong> and a wider investment banking strategy.</li>
+          <li><strong>Built the case for Deal Room,</strong> a governed space for deal teams. I sized a <strong>$3.4B market</strong> and about <strong>$20M ARR over five years</strong>. Eight customers already ask for it. Interviews are underway.</li>
+          <li><strong>Took iManage Drive from concept to mass adoption.</strong> It puts governed document access inside Windows Explorer and macOS Finder. Growth was <strong>100% YoY</strong>, then 55% YoY for two years. The 2026 roadmap adds category sync (the top-voted Drive idea), recent-document sync, and lazy sync.</li>
+        </ul>
+      </div>
+
+      <div class="theme">
+        <h3>Platform transitions and delivery</h3>
+        <ul class="bullets">
+          <li><strong>Led New Outlook email management, from legacy COM add-in to cloud.</strong> It went live in February. In eight months, <strong>246 customers adopted it</strong>, with 2,097 active users, from a base of 4,000+. It is now the default path for customers leaving COM. It has filed 479,160 emails, 315K+ from external customers. Weekly active filers grew about 75% from July to October. It was critical in several EMEA corporate RFPs. Earlier EAP work opened a <strong>$60M ARR TAM</strong>.</li>
+          <li><strong>Rescued the Mailbox Assistant release.</strong> It had slipped behind other work. I renegotiated the plan with Engineering and built the business case: TAM, pricing, and the cost of running AI. It is now a controlled release for approved customers. A wider EAP is planned for early next year.</li>
+          <li><strong>Spoke at ILTACON 2026.</strong> ILTA nominated me. I used the session to build momentum for New Outlook email management and Mailbox Assistant.</li>
+        </ul>
+      </div>
+
+      <div class="theme">
+        <h3>Revenue retention</h3>
+        <ul class="bullets">
+          <li><strong>Led the Gmail Extension end-of-life.</strong> I kept <strong>$4M ARR</strong> and removed about $600K in yearly cost, which moved to higher-growth work. Gmail support went to a partner, protecting 3,000–5,000 seats. I am now building Gmail email management and a Workspace add-in with a partner. That reopens corporate TAM.</li>
+        </ul>
+      </div>
+
+      <div class="theme">
+        <h3>AI fluency and team leadership</h3>
+        <ul class="bullets">
+          <li><strong>Prototype to convince.</strong> I build working agents and workflows with Claude Code and MCPs. My banking prototype aligned Engineering and now drives category sync and lazy sync. Sales and Professional Services used it to win the customer's leadership.</li>
+          <li><strong>Lead with data.</strong> The team asked me to beta test our internal analytics platform and help set its MVP. My business cases now start with numbers.</li>
+          <li><strong>Scale what works.</strong> I run brown bag sessions and help colleagues build AI skills.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="earlier">
       <div class="tl-item">
         <div class="tl-role">nuVizz — Product Manager / Business Analyst</div>
         <div class="tl-meta">Aug 2014 – Aug 2017</div>
@@ -340,6 +264,20 @@
         <div class="tl-meta">Mar 2011 – Jul 2013</div>
       </div>
     </div>
+  </section>
+
+  <section id="public">
+    <div class="eyebrow">// building in public</div>
+    <h2>Projects and writing</h2>
+    <ul class="now-list">
+      <li><span class="tag">BUILD</span> <a href="writing/pm-ppm-fieldkit.html">PM/PPM Field Kit</a> — 49 Claude Code skills covering the full product management lifecycle.</li>
+      <li><span class="tag wip">WIP</span> <a href="writing/email-insights-harness.html">Email Commitment Finder</a> — an AI harness that finds commitments and deadlines in email, and says when it isn't sure. Includes a cost and quality comparison of Claude Sonnet against a local DeepSeek-R1 model. <a href="https://github.com/ganeshkrithikavasan/Email-Commitment-Finder" target="_blank" rel="noopener">Repo</a></li>
+    </ul>
+  </section>
+
+  <section id="education">
+    <div class="eyebrow">// education & credentials</div>
+    <h2>Education</h2>
     <div class="edu-grid">
       <div class="edu-item">
         <h3>MS, Management Information Systems</h3>
@@ -358,63 +296,9 @@
 
   <footer>
     <span>Chicago, IL</span>
-    <span><a href="mailto:you@example.com">you@example.com</a> · <a href="https://www.linkedin.com/in/ganeshkrithikavasan/" target="_blank" rel="noopener">LinkedIn</a></span>
+    <span><a href="mailto:ganesh.krithikavasan@gmail.com">ganesh.krithikavasan@gmail.com</a> · <a href="https://www.linkedin.com/in/ganeshkrithikavasan/" target="_blank" rel="noopener">LinkedIn</a></span>
   </footer>
 </div>
-
-<script>
-  const lines = [
-    { prompt: '$ ', text: 'whoami', out: false },
-    { prompt: '', text: 'principal_pm @ iManage — 15+ yrs enterprise SaaS', out: true },
-    { prompt: '$ ', text: 'cat focus.txt', out: false },
-    { prompt: '', text: 'context fabric · agentic workflows · legal & knowledge tech', out: true },
-  ];
-
-  const el = document.getElementById('terminal');
-  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  function renderStatic() {
-    el.innerHTML = lines.map(l =>
-      `<div class="line"><span class="prompt">${l.prompt}</span><span class="${l.out ? 'out' : ''}">${l.text}</span></div>`
-    ).join('');
-  }
-
-  if (reduceMotion) {
-    renderStatic();
-  } else {
-    let li = 0, ci = 0;
-    const cursor = '<span class="cursor"></span>';
-
-    function typeLine() {
-      if (li >= lines.length) { el.querySelector('.cursor')?.remove(); el.insertAdjacentHTML('beforeend', cursor); return; }
-      const current = lines[li];
-      const div = document.createElement('div');
-      div.className = 'line';
-      el.appendChild(div);
-
-      if (current.out) {
-        div.innerHTML = `<span class="out">${current.text}</span>`;
-        li++;
-        setTimeout(typeLine, 260);
-        return;
-      }
-
-      function typeChar() {
-        div.innerHTML = `<span class="prompt">${current.prompt}</span>${current.text.slice(0, ci)}${cursor}`;
-        if (ci < current.text.length) {
-          ci++;
-          setTimeout(typeChar, 32);
-        } else {
-          ci = 0;
-          li++;
-          setTimeout(typeLine, 180);
-        }
-      }
-      typeChar();
-    }
-    typeLine();
-  }
-</script>
 
 </body>
 </html>
