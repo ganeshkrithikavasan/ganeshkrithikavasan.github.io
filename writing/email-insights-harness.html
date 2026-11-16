@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Email Commitment Finder</title>
+<meta name="description" content="A small AI system that finds commitments and deadlines in email, and says when it is not sure.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* Matches the terminal-style look of the site: Plex Mono for labels, Plex Sans for reading. */
+  :root {
+    --bg: #fbfbf8;
+    --fg: #1d2420;
+    --dim: #5d6661;
+    --rule: #d9ddd6;
+    --accent: #1f6b4f;
+    --code-bg: #eef1ec;
+    --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    --sans: "IBM Plex Sans", system-ui, -apple-system, Segoe UI, Arial, sans-serif;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #101412;
+      --fg: #e4e9e3;
+      --dim: #97a29b;
+      --rule: #2a322d;
+      --accent: #7fd1ae;
+      --code-bg: #1a201c;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #101412;
+    --fg: #e4e9e3;
+    --dim: #97a29b;
+    --rule: #2a322d;
+    --accent: #7fd1ae;
+    --code-bg: #1a201c;
+    color-scheme: dark;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--sans);
+    font-size: 17px;
+    line-height: 1.7;
+  }
+  main {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 56px 20px 80px;
+  }
+  h1 {
+    font-family: var(--mono);
+    font-weight: 600;
+    font-size: clamp(26px, 5vw, 34px);
+    line-height: 1.2;
+    margin: 0 0 8px;
+    text-wrap: balance;
+  }
+  .lede {
+    color: var(--dim);
+    margin: 0 0 40px;
+  }
+  h2 {
+    font-family: var(--mono);
+    font-weight: 600;
+    font-size: 18px;
+    margin: 44px 0 14px;
+    padding-top: 24px;
+    border-top: 1px solid var(--rule);
+  }
+  h2::before {
+    content: "# ";
+    color: var(--accent);
+  }
+  p { margin: 0 0 16px; }
+  ol, ul { padding-left: 22px; margin: 0 0 18px; }
+  li { margin-bottom: 10px; }
+  a { color: var(--accent); }
+  strong { font-weight: 600; }
+  .question {
+    border-left: 2px solid var(--accent);
+    padding: 2px 0 2px 16px;
+    margin: 0 0 14px;
+  }
+  .code-ref {
+    font-family: var(--mono);
+    font-size: 0.92em;
+    background: var(--code-bg);
+    padding: 1px 6px;
+    border-radius: 4px;
+  }
+  footer {
+    margin-top: 56px;
+    padding-top: 20px;
+    border-top: 1px solid var(--rule);
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--dim);
+  }
+  @media (max-width: 480px) {
+    body { font-size: 16px; }
+    main { padding: 36px 16px 60px; }
+  }
+</style>
+</head>
+<body>
+<main>
+
+  <h1>Email Commitment Finder</h1>
+  <p class="lede">A small AI system that finds commitments and deadlines in email. It also says when it is not sure.</p>
+
+  <p>This system reads email and figures out two things.</p>
+  <ol>
+    <li><strong>Does this email contain a commitment or a deadline?</strong> If so, what is it? Who made it? How sure are we?</li>
+    <li><strong>Who and what is this email about?</strong> Emails mention the same client, deal, or project in many different ways. This project links those mentions into one clear picture.</li>
+  </ol>
+
+  <p>I am using a well known public dataset, <a href="https://github.com/MWiechmann/enron_spam_data" rel="noopener">Enron</a>. It is not someone's private inbox.</p>
+
+  <h2>Personal goal for building this project</h2>
+
+  <p>I've spent 15 years in R&amp;D and product management. For the last several years, I have focused on AI products in legal tech.</p>
+
+  <p>Before writing any code, here is a question I would ask if someone else had built it. When does it save a person time? When does it become one more thing they have to double check?</p>
+
+  <p>If I were scoping this as a product, I would ask a few more questions.</p>
+  <ul>
+    <li class="question"><strong>How often is the system confident?</strong> How often does it have to say "I'm not sure"? A system that is usable only a fifth of the time saves nobody work.</li>
+    <li class="question"><strong>Which mistake costs more?</strong> Missing a real deadline, or flagging something that is not one. I will not tune for the wrong one.</li>
+    <li class="question"><strong>What does it cost per email to run on different models?</strong> Does that number still make sense at production scale? I am answering this with a real side by side comparison. The same extraction task runs on a frontier model, Claude Sonnet. It also runs on a local model, DeepSeek-R1 14B through Ollama on my own machine. Let's put those GPUs to work! My goal is not to prove the free model is just as good. I want to see what it costs in quality to bring the cost down, and where that tradeoff stops being worth it.</li>
+    <li class="question"><strong>Does "I'm not sure" make people ignore the system?</strong> Do they stop using it entirely after it catches one wrong answer?</li>
+    <li class="question"><strong>Can the system explain its decisions?</strong> In a legal or compliance adjacent workflow, this is not optional.</li>
+  </ul>
+
+  <p>Those are the questions I would ask as an AI PM. I am answering them myself, with the system I am designing and building.</p>
+
+  <h2>How I'm building it</h2>
+
+  <p>Every email goes through a small pipeline.</p>
+  <ol>
+    <li><strong>Extract.</strong> An AI model reads the email. It pulls out any commitments or deadlines it finds. Then it gives each one a confidence score.</li>
+    <li><strong>Check.</strong> A second, independent pass reviews the extraction. Part of this check is another AI model. Part of it is traditional Python code. The code asks two simple things. Does the date actually exist? Is the confidence score in a valid range? Mixing an AI check with a hard-coded check catches different kinds of mistakes.</li>
+    <li><strong>Decide.</strong> If the extraction is solid and both checks agree, the system accepts it. If not, it tries again once, now knowing the difference or disagreement. If it is still unclear, it marks the result "unsure" and flags it for a person to review. Instead of guessing and hoping, the system hands the decision to a human. This is the "human in the loop" part.</li>
+    <li><strong>Record and audit.</strong> Every decision is logged. The log holds the input, the output, and how confident the system was. It also holds the exact prompt and model versions, and what the run cost in time and tokens.</li>
+  </ol>
+
+  <p>That loop of extract, check, decide, record is our project's <span class="code-ref">harness</span>.</p>
+
+  <h2>Stages</h2>
+
+  <ol>
+    <li><strong>Get the core loop working</strong> on real email. Extract, check, decide, record.</li>
+    <li><strong>Add memory for people and companies.</strong> Use embeddings, which turn text into numbers that capture meaning. The system then recognizes that "Acme Corp," "Acme," and "the Acme deal" are the same thing, even across different emails.</li>
+    <li><strong>Turn it into tools an AI agent can call</strong> via MCP.</li>
+    <li><strong>Run evals and cost analysis.</strong> Build a real evaluation set. Check accuracy, how often it makes things up, how fast it is, and what it costs to run. This is also where the Sonnet vs. DeepSeek-R1 tokenomics comparison lives. Same pipeline, same prompts, one frontier model and one local model, run side by side. The cost and quality tradeoff gets measured, not guessed.</li>
+    <li><strong>Write it up.</strong> What was built. What worked. What didn't. What I would do differently at scale. The goal is a production-ready product.</li>
+  </ol>
+
+  <footer>
+    Built in public. Code and results at <a href="https://github.com/ganeshkrithikavasan/Email-Commitment-Finder" rel="noopener">github.com/ganeshkrithikavasan/Email-Commitment-Finder</a>
+  </footer>
+
+</main>
+</body>
+</html>
